@@ -17,5 +17,17 @@ def jabe():
     msg.message(answer)
     return str(msg)
 
+
+@app.route('/bot', methods=['POST'])
+def jarvis():
+    incoming_msg = request.values['Body']
+    chat_log = session.get('chat_log')
+    answer = ask(incoming_msg, chat_log)
+    session['chat_log'] = append_interaction_to_chat_log(incoming_msg, answer,
+                                                         chat_log)
+    # msg = MessagingResponse()
+    # msg.message(answer)
+    return str(answer)
+
 if __name__ == '__main__':
     app.run(debug=True)
